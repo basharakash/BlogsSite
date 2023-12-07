@@ -39,7 +39,7 @@ export class AuthService {
 
         // eslint-disable-next-line no-useless-catch
         try {
-            return await this.account(email, password)
+            return await this.account.createEmailSession(email, password)
         } catch (error) {
             throw error
         }
