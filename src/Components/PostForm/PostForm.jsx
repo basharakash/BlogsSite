@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback} from 'react';
 import appwriteService from "../../appwrite/config.js"
-import {Input, Button, RTE, Seclect} from "../index.js"
+import {Input, Button, RTE, Select} from "../index.js"
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
@@ -11,7 +11,7 @@ function PostForm({post}) {
     const {register, handleSubmit, control, setValue, watch, getValues} = useForm({
         defaultValues: {
             title: post?.title || "",
-            slug: post?.slug || "",
+            slug: post?.$id || "",
             content: post?.content || "",
             status: post?.status || "active",
         }
@@ -20,7 +20,7 @@ function PostForm({post}) {
     const userData = useSelector((state) => state.auth.userData)
 
     const submit = async (data) => {
-        if (data) {
+        if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null
 
             if (file) {
@@ -53,36 +53,36 @@ function PostForm({post}) {
         if (value && typeof value === "string")
             return value
                 .trim()
-                .toLocaleLowerCase()
-                .replace(/[^a-zA-Z\d\s]+/g, "_")
-                .replace(/\s/g, "_")
+                .toLowerCase()
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
 
         return ""
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         const subscription = watch((value, {name}) => {
-            if (name === "titile") {
+            if (name === "title") {
                 setValue("slug", slugTransform(value.title), {shouldValidate: true})
             }
         })
 
-        return () => subscription.unsubscribe()
+        return () => subscription.unsubscribe();
 
-    }, [slugTransform, watch, setValue()]);
+    }, [slugTransform, watch, setValue]);
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
-                    label="title :"
-                    placeholder="title"
+                    label="Title :"
+                    placeholder="Title"
                     className="mb-4"
                     {...register("title", {required: true})}
                 />
 
                 <Input
-                    label="slug :"
-                    placeholder="slug"
+                    label="Slug :"
+                    placeholder="Slug"
                     className="mb-4"
                     {...register("slug", {required: true})}
                     onInput={(e) => {
@@ -91,7 +91,7 @@ function PostForm({post}) {
                 />
 
                 <RTE
-                    label="content :"
+                    label="Content :"
                     name="content"
                     control={control}
                     defaultValue={getValues("content")}
@@ -115,9 +115,9 @@ function PostForm({post}) {
                     </div>
                 )}
 
-                <Seclect
+                <Select
                     options={["active", "inactive"]}
-                    lael="Status"
+                    label="Status"
                     className="mb-4"
                     {...register("status", {required: true})}
                 />

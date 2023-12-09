@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import LogOutBtn from "./Header/LogOutBtn";
 import Input from "./Input.jsx"
 import Button from "./Button.jsx"
-import Seclect from "./Seclect.jsx";
+import Select from "./Select.jsx";
 import RTE from "./RTE.jsx"
 import SignUp from "./SignUp.jsx"
 import Login from "./Login.jsx";
@@ -21,7 +21,7 @@ export {
     LogOutBtn,
     Input,
     Button,
-    Seclect,
+    Select,
     RTE,
     SignUp,
     Login,

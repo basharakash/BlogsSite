@@ -16,7 +16,7 @@ export class AuthService {
 
 
     // Sign Up function
-    async createAccount({email, password, name}, error1 = error) {
+    async createAccount({email, password, name}) {
         // eslint-disable-next-line no-useless-catch
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
