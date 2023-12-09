@@ -6,7 +6,7 @@ import {Button, Container} from "../Components/index.js";
 import postcssValueParser from "html-react-parser"
 
 
-function Post(props) {
+function Post() {
     const [post, setPost] = useState(null)
     const navigate = useNavigate()
     const {slug} = useParams()

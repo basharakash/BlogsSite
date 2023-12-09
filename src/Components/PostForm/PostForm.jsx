@@ -10,10 +10,10 @@ function PostForm({post}) {
 
     const {register, handleSubmit, control, setValue, watch, getValues} = useForm({
         defaultValues: {
-            title: post?.title || "",
+            title_1: post?.title_1 || "",
             slug: post?.$id || "",
-            content: post?.content || "",
-            status: post?.status || "active",
+            content_1: post?.content_1 || "",
+            status_1: post?.status_1 || "active",
         }
     })
     const navigate = useNavigate()
@@ -24,12 +24,12 @@ function PostForm({post}) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null
 
             if (file) {
-                appwriteService.deleteFile(post.featuredImage)
+                appwriteService.deleteFile(post.featured_image_1)
             }
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredimage: file ? file.$id : undefined
+                featured_image_1: file ? file.$id : undefined
             })
 
             if (dbPost) {
@@ -39,8 +39,8 @@ function PostForm({post}) {
             const file = await appwriteService.uploadFile(data.image[0])
             if (file) {
                 const fileId = file.$id
-                data.featuredImage = fileId
-                const dbPost = await appwriteService.creatPost({...data, userId: userData.$id})
+                data.featured_image_1 = fileId
+                const dbPost = await appwriteService.createPost({...data, userId: userData.$id})
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`)
@@ -108,7 +108,7 @@ function PostForm({post}) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFilePreview(post.featured_image_1)}
                             alt={post.title}
                             className="rounded-lg"
                         />
@@ -117,9 +117,9 @@ function PostForm({post}) {
 
                 <Select
                     options={["active", "inactive"]}
-                    label="Status"
+                    label="Status_1"
                     className="mb-4"
-                    {...register("status", {required: true})}
+                    {...register("status_1", {required: true})}
                 />
 
                 <Button

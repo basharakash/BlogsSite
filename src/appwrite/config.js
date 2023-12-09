@@ -18,7 +18,7 @@ export class Service {
 
 
     //     Creat post
-    async creatPost({title, slug, content, featuredImage, status, userId}) {
+    async createPost({title, slug, content, featuredImage, status_1, userId}) {
 
         try {
             return await this.databases.createDocument(
@@ -30,7 +30,7 @@ export class Service {
                     title,
                     content,
                     featuredImage,
-                    status,
+                    status_1,
                     userId
                 }
         } catch (error) {
@@ -40,7 +40,7 @@ export class Service {
 
 //     Update post
 
-    async updatePost(slug, {title, content, featuredimage, status}) {
+    async updatePost(slug, {title, content, featuredimage, status_1}) {
 
         try {
             return await this.databases.updateDocument(
@@ -52,7 +52,7 @@ export class Service {
                     title,
                     content,
                     featuredimage,
-                    status
+                    status_1
                 }
         } catch (error) {
 
@@ -95,7 +95,7 @@ export class Service {
 
 
 //     Get Posts
-    async getPosts(queries = [Query.equal("status", "active")]) {
+    async getPosts(queries = [Query.equal("status_1", "active")]) {
 
         try {
 
